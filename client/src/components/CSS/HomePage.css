@@ -1,0 +1,226 @@
+/* File: HomePage.css */
+
+/* Basic Reset and Page Styling */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clear, modern font */
+  background-color: #f9f9f9; /* Light background */
+}
+
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures footer sticks to bottom */
+}
+
+/* Header Styling */
+.homepage-header {
+  background-color: #222; /* Dark background for header */
+  color: white;
+  padding: 1rem 2rem; /* Spacing inside header */
+  display: flex;
+  justify-content: space-between; /* Space between logo and nav */
+  align-items: center; /* Vertically center elements */
+}
+
+.logo {
+  font-size: 1.8rem; /* Logo font size */
+  font-weight: bold;
+}
+
+.nav-menu a {
+  color: white;
+  margin-left: 1rem; /* Spacing between links */
+  text-decoration: none; /* Remove underline */
+  font-size: 1rem;
+}
+
+.nav-menu a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+  padding: 6rem 2rem;
+  text-align: center;
+  color: white;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: slideDown 0.6s ease-out;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  animation: slideUp 0.6s ease-out 0.2s both;
+}
+
+/* Products Section */
+.products-section {
+  padding: 2rem;
+  background-color: white; /* White background for contrast */
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.product-image-container {
+  position: relative;
+  padding-top: 100%;
+  overflow: hidden;
+}
+
+.product-image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .hover-overlay {
+  opacity: 1;
+}
+
+.quick-view-btn {
+  background: white;
+  color: #4F46E5;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .quick-view-btn {
+  transform: translateY(0);
+}
+
+/* Footer Styling */
+.homepage-footer {
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto; /* Push footer to bottom */
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: #f0f0f0;
+  animation: pulse 1.5s infinite;
+}
+
+.skeleton-img {
+  height: 200px;
+  background: #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.skeleton-text {
+  height: 20px;
+  background: #e0e0e0;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.skeleton-text.short {
+  width: 60%;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: flex;
+    flex-direction: column; /* Stack nav links */
+    align-items: flex-start;
+  }
+
+  .products-grid {
+    flex-direction: column; /* Stack product cards */
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section h2 {
+    font-size: 1.5rem; /* Smaller text on small screens */
+  }
+
+  .shop-now-btn {
+    width: 100%; /* Full width button on mobile */
+  }
+}
