@@ -2,6 +2,7 @@ import express from 'express';
 import { createUser } from '../controllers/create.user.js';
 import { loginUser } from '../controllers/login.user.js';
 import User from '../models/user.model.js';
+import { auth } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -45,6 +46,22 @@ router.get('/getUser/:email', async (req, res) => {
     }
 });
 
+router.get('/me', auth, async (req, res) => {
+    try {
+        // req.user is set by auth middleware
+        res.json({
+            success: true,
+            user: {
+                id: req.user._id,
+                username: req.user.username,
+                email: req.user.email,
+                isAdmin: req.user.isAdmin
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
 
 // Example: POST /users
 export const userRouter = router;

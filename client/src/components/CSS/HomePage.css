@@ -11,6 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh; /* Ensures footer sticks to bottom */
+  margin-top: 70px; /* Add space for fixed navbar */
 }
 
 /* Header Styling */

@@ -1,0 +1,44 @@
+.navbar {
+    background: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black; /* Added black color */
+}
+
+.nav-logo {
+    color: black; /* Changed to black */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-logo:hover {
+    color: #4338CA;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: rgb(72, 72, 72); /* Changed to black */
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Rest of the CSS remains the same */
