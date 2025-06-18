@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { productService } from '../services/productService';
 import "./CSS/CreateProduct.css";
 
 const CreateProduct = () => {
@@ -23,27 +24,21 @@ const CreateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!image) {
-        console.error("No image selected");
-        return;
-      }
-
+      if (!image) return;
+      
       const base64Image = await convertToBase64(image);
+      const productData = {
+        name,
+        price,
+        discount,
+        image: base64Image,
+        description: "No description provided"
+      };
 
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/api/product/create`,
-        {
-          name,
-          price,
-          discount,
-          description: "No description provided",
-          image: base64Image,
-        }
-      );
-
-      if (response.data.success) {
+      const response = await productService.createProduct(productData);
+      if (response.success) {
         navigate("/home");
-        setSuccess(response.data.message);
+        setSuccess(response.message);
       }
     } catch (error) {
       console.error(error);

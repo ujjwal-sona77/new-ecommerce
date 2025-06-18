@@ -1,44 +1,206 @@
 .navbar {
-    background: white;
-    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 1rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
+    position: fixed;
+    width: 100%;
     top: 0;
+    left: 0;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
 .nav-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: black; /* Added black color */
+    display: flex;
+    align-items: center;
 }
 
 .nav-logo {
-    color: black; /* Changed to black */
-    text-decoration: none;
-    transition: color 0.3s ease;
+    all: unset;
+    cursor: pointer;
 }
 
-.nav-logo:hover {
-    color: #4338CA;
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #3B82F6, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .nav-link {
-    color: rgb(72, 72, 72); /* Changed to black */
-    text-decoration: none;
+    all: unset;
+    font-size: 0.95rem;
     font-weight: 500;
-    transition: all 0.3s ease;
+    color: #374151;
+    cursor: pointer;
+    padding: 0.5rem 0;
     position: relative;
+    transition: color 0.3s ease;
 }
 
-/* Rest of the CSS remains the same */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(45deg, #3B82F6, #8B5CF6);
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+.nav-link:hover {
+    color: #3B82F6;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.admin-link {
+    color: #3B82F6;
+    font-weight: 600;
+}
+
+.user-dropdown {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 0.75rem;
+    min-width: 180px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.user-dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-link,
+.logout-btn {
+    all: unset;
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dropdown-link:hover {
+    background: #F3F4F6;
+}
+
+.logout-btn {
+    color: #EF4444;
+    margin-top: 0.25rem;
+}
+
+.logout-btn:hover {
+    background: #FEE2E2;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.login-link,
+.signup-link {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.login-link:hover {
+    background: #F3F4F6;
+}
+
+.signup-link {
+    background: #3B82F6;
+    color: white;
+}
+
+.signup-link:hover {
+    background: #2563EB;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.25rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .user-dropdown,
+    .auth-buttons {
+        width: 100%;
+    }
+
+    .auth-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .login-link,
+    .signup-link {
+        width: 100%;
+        text-align: center;
+    }
+}

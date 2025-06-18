@@ -1,86 +1,94 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './CSS/Navbar.css';
-import axios from 'axios';
+import { authService } from '../services/authService';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState(null);
-    const [email, setEmail] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            // Decode JWT token to get user email
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const payload = JSON.parse(window.atob(base64));
-            setEmail(payload.email);
-        }
-    }, []);
-
-    useEffect(() => {
         const fetchUser = async () => {
-            if (email) {
-                try {
-                    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URI}/api/user/getUser/${email}`, );
-                    if (response.status === 200) {
-                        setUser(response.data.user);
-                    }
-                } catch (error) {
-                    console.error('Error fetching user data:', error);
-                }
+            try {
+                const userData = await authService.getCurrentUser();
+                setUser(userData);
+            } catch (error) {
+                console.error('Error fetching user:', error);
             }
         };
         fetchUser();
-    }, [email]);
-
+    }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        setEmail(null);
+        authService.logout();
+        setUser(null);
         navigate('/login');
+        setIsOpen(false);
+    };
+
+    const handleNavigation = (path) => {
+        navigate(path);
+        setIsOpen(false);
     };
 
     return (
         <nav className="navbar">
             <div className="nav-brand">
-                <Link to="/" className="nav-logo text-black">EComm</Link>
+                <button onClick={() => handleNavigation('/')} className="nav-logo">
+                    <span className="logo-text">ShopEase</span>
+                </button>
             </div>
 
             <button 
                 className={`nav-toggle ${isOpen ? 'active' : ''}`}
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label="toggle navigation"
             >
-                <span></span>
-                <span></span>
-                <span></span>
+                <div className="hamburger"></div>
             </button>
 
             <div className={`nav-menu ${isOpen ? 'active' : ''}`}>
-                <Link to="/" className="nav-link text-black">Home</Link>
-                <Link to="/shop" className="nav-link text-black">Shop</Link>
+                <button onClick={() => handleNavigation('/')} className="nav-link">
+                    Home
+                </button>
+                <button onClick={() => handleNavigation('/shop')} className="nav-link">
+                    Shop
+                </button>
                 
                 {user ? (
                     <>
                         {user.admin && (
-                            <Link to="/create/product" className="nav-link text-black admin-link">
+                            <button 
+                                onClick={() => handleNavigation('/create/product')}
+                                className="nav-link text-black-600 admin-link"
+                            >
                                 Create Product
-                            </Link>
+                            </button>
                         )}
-                        <div className="nav-link text-black user-info">
-                            Welcome, {user.username}
+                        <div className="user-dropdown">
+                            <span className="user-info">
+                                Welcome, {user.username}
+                            </span>
+                            <div className="dropdown-content">
+                                <button onClick={() => handleNavigation('/user/profile')} className="dropdown-link">
+                                    Profile
+                                </button>
+                                <button onClick={handleLogout} className="logout-btn">
+                                    Logout
+                                </button>
+                            </div>
                         </div>
-                        <button onClick={handleLogout} className="nav-link text-black logout-btn">
-                            Logout
-                        </button>
                     </>
                 ) : (
-                    <>
-                        <Link to="/login" className="nav-link text-black">Login</Link>
-                        <Link to="/signup" className="nav-link text-black">Sign Up</Link>
-                    </>
+                    <div className="auth-buttons">
+                        <button onClick={() => handleNavigation('/login')} className="nav-link login-link">
+                            Login
+                        </button>
+                        <button onClick={() => handleNavigation('/signup')} className="nav-link signup-link">
+                            Sign Up
+                        </button>
+                    </div>
                 )}
             </div>
         </nav>

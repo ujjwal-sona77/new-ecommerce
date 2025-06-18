@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { authService } from '../services/authService';
 import "./CSS/Login.css"
+import { Navigate, redirect } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
@@ -18,21 +19,22 @@ const Login = () => {
         setError("")
         
         try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URI}/api/user/login`,
-                { email, password }
-            )
-            if (response.status === 200) {
-                const token = response.data.token
-                localStorage.setItem("token", token)
-                navigate("/home", { replace: true }) // Redirect to home page
-            }
+            await authService.login(email, password);
+            navigate("/home", { replace: true }) // Redirect to home page
         } catch (error) {
-            setError("Invalid email or password")
+            setError(error.message || "Invalid email or password")
         } finally {
             setIsSubmitting(false)
         }
     }
+
+    // Check if the user is already logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            navigate("/home");
+        }
+    }, []);
 
     return (
         <div className="login-container">
