@@ -1,17 +1,21 @@
 /* File: HomePage.css */
 
 /* Basic Reset and Page Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clear, modern font */
-  background-color: #f9f9f9; /* Light background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    overflow-x: hidden;
 }
 
 .homepage-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensures footer sticks to bottom */
-  margin-top: 70px; /* Add space for fixed navbar */
+    width: 100%;
+    padding-top: 60px; /* Match navbar height */
 }
 
 /* Header Styling */
@@ -42,11 +46,12 @@ body {
 
 /* Hero Section */
 .hero-section {
-  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
-  padding: 6rem 2rem;
-  text-align: center;
-  color: white;
-  animation: fadeIn 0.8s ease-out;
+    width: 100%;
+    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+    padding: 4rem 2rem;
+    text-align: center;
+    color: white;
+    animation: fadeIn 0.8s ease-out;
 }
 
 .hero-title {
@@ -63,15 +68,17 @@ body {
 
 /* Products Section */
 .products-section {
-  padding: 2rem;
-  background-color: white; /* White background for contrast */
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    width: 100%;
 }
 
 .product-card {
@@ -204,16 +211,21 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .nav-menu {
-    display: flex;
-    flex-direction: column; /* Stack nav links */
-    align-items: flex-start;
-  }
+    .nav-menu {
+        display: flex;
+        flex-direction: column; /* Stack nav links */
+        align-items: flex-start;
+    }
 
-  .products-grid {
-    flex-direction: column; /* Stack product cards */
-    align-items: center;
-  }
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .hero-section {
+        padding: 3rem 1rem;
+    }
 }
 
 @media (max-width: 480px) {

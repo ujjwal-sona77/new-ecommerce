@@ -1,9 +1,6 @@
 import "dotenv/config";
 
-// Debug environment variables
-console.log('Environment Check:', {
-  MONGO_URI: process.env.MONGO_URI
-});
+
 
 // Verify environment variables
 if (!process.env.MONGO_URI) {

@@ -29,13 +29,17 @@ const Home = () => {
       <Navbar />
       <div className="homepage-container">
         <section className="hero-section">
-          <h1 className="hero-title">Welcome to Our E-Commerce Store</h1>
-          <p className="hero-subtitle">
-            Shop the latest products at unbeatable prices!
-          </p>
+          <div className="hero-content">
+            <h1 className="hero-title">Discover Amazing Products</h1>
+            <p className="hero-subtitle">
+              Shop the latest trends at unbeatable prices. Find everything you
+              need, all in one place.
+            </p>
+          </div>
         </section>
 
         <section className="products-section">
+          <h2 className="section-title">Featured Products</h2>
           <Products products={products} loading={loading} error={error} />
         </section>
       </div>
