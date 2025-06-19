@@ -7,6 +7,16 @@
   padding: 20px;
 }
 
+.login-link {
+  color: #6c63ff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+}
+
 .signup-form {
   background: white;
   padding: 2.5rem;

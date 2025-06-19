@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./CSS/HomePage.css";
 import Navbar from "./Navbar";
 import Products from "./Products";

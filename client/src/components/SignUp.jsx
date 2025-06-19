@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./CSS/SignUp.css";
 
 const SignUp = () => {
@@ -34,7 +34,6 @@ const SignUp = () => {
         const token = response.data.token;
         localStorage.setItem("token", token);
         // Optionally, you can redirect to the home page or show a success message
-        
       }
     } catch (error) {
       setError(error.response?.data?.message || "Registration failed");
@@ -100,6 +99,9 @@ const SignUp = () => {
             )}
           </div>
         </button>
+        <Link to="/login" className="login-link">
+          Already have an account? Log in
+        </Link>
       </form>
     </div>
   );
