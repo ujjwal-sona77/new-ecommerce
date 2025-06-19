@@ -7,7 +7,7 @@ import { productRouter } from "./routes/product.route.js";
 import { orderRouter } from "./routes/order.route.js"; // Assuming you have an order router, replace with actual order router
 import { adminRouter } from "./routes/admin.route.js";
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://new-ecommerce-drab.vercel.app",
     credentials: true,
 }));
 app.use(express.urlencoded({ extended: true }));
