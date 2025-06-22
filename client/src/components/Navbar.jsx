@@ -62,16 +62,23 @@ const Navbar = () => {
             >
               Shop
             </button>
-
             {user ? (
               <>
                 {user.admin && (
-                  <button
-                    onClick={() => handleNavigation("/create/product")}
-                    className="nav-link admin-link"
-                  >
-                    Create Product
-                  </button>
+                  <>
+                    <button
+                      onClick={() => handleNavigation("/admin/dashboard")}
+                      className="nav-link admin-link"
+                    >
+                      Admin Dashboard
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/create/product")}
+                      className="nav-link admin-link"
+                    >
+                      Create Product
+                    </button>
+                  </>
                 )}
                 <div className="nav-actions">
                   <button
@@ -80,12 +87,12 @@ const Navbar = () => {
                   >
                     Profile
                   </button>
-                    <button
-                        onClick={handleLogout}
-                        className="nav-link logout-link"
-                    >
-                        Logout
-                    </button>
+                  <button
+                    onClick={handleLogout}
+                    className="nav-link logout-link"
+                  >
+                    Logout
+                  </button>
                 </div>
               </>
             ) : null}
