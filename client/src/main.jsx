@@ -12,6 +12,7 @@ import CreateProduct from './components/CreateProduct.jsx'
 import AdminAuth from './components/AdminProtected.jsx'
 import Profile from './components/Profile.jsx'
 import AdminDashboard from './components/AdminDashboard.jsx'
+import EditUser from './components/EditUser.jsx'
 createRoot(document.getElementById('root')).render(
     <StrictMode>
         <BrowserRouter>
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')).render(
                     <Route element={<AdminAuth />}>
                         <Route path="/create/product" element={<CreateProduct />} />
                         <Route path='/admin/dashboard' element={<AdminDashboard />} />
+                        <Route path='/admin/edit/user' element={<EditUser />} />
                     </Route>
                 </Route>
                 <Route path="/" element={<App />} />

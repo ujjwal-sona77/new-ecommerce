@@ -1,132 +1,340 @@
-import React, { useState, useEffect } from 'react';
-import { authService } from '../services/authService';
-import Navbar from './Navbar';
-import './CSS/Profile.css';
+import React, { useState, useEffect } from "react";
+import { authService } from "../services/authService";
+import Navbar from "./Navbar";
+import "./CSS/Profile.css";
 
 const Profile = () => {
-    const [user, setUser] = useState(null);
-    const [activeTab, setActiveTab] = useState('profile');
-    const [cartItems, setCartItems] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [activeTab, setActiveTab] = useState("profile");
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userData = await authService.getCurrentUser();
-                setUser(userData);
-                // Fetch cart items here when implemented
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await authService.getCurrentUser();
+        setUser(userData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setLoading(false);
+      }
+    };
 
-        fetchUserData();
-    }, []);
+    fetchUserData();
+  }, []);
 
-    if (loading) {
-        return (
-            <>
-                <Navbar />
-                <div className="profile-loading">
-                    <div className="spinner"></div>
-                </div>
-            </>
-        );
-    }
-
+  if (loading) {
     return (
-        <>
-            <Navbar />
-            <div className="profile-container">
-                <div className="profile-sidebar">
-                    <div className="user-brief">
-                        <div className="user-avatar">
-                            {user?.username?.charAt(0).toUpperCase()}
-                        </div>
-                        <h3>{user?.username}</h3>
-                        <p>{user?.email}</p>
+      <>
+        <Navbar />
+        <div className="profile-loading">
+          <div className="spinner"></div>
+        </div>
+      </>
+    );
+  }
+
+return (
+    <>
+        <Navbar />
+        <div
+            className="profile-container"
+            style={{
+                display: "flex",
+                minHeight: "80vh",
+                background: "#f7f7fa",
+                padding: "40px 0",
+                fontFamily: "Segoe UI, sans-serif",
+            }}
+        >
+            <div
+                className="profile-sidebar"
+                style={{
+                    width: "300px",
+                    background: "#fff",
+                    borderRadius: "18px",
+                    boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
+                    margin: "0 32px",
+                    padding: "32px 24px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}
+            >
+                <div className="user-brief" style={{ textAlign: "center" }}>
+                    <div
+                        className="user-avatar"
+                        style={{
+                            width: "90px",
+                            height: "90px",
+                            borderRadius: "50%",
+                            overflow: "hidden",
+                            margin: "0 auto 16px",
+                            border: "3px solid #e0e0e0",
+                            boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                        }}
+                    >
+                        <img
+                            src={user.profilePic}
+                            alt="Profile"
+                            className="profile-picture"
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                            }}
+                        />
                     </div>
-                    <div className="profile-tabs">
-                        <button 
-                            className={`tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('profile')}
-                        >
-                            Profile Details
-                        </button>
-                        <button 
-                            className={`tab-btn ${activeTab === 'cart' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('cart')}
-                        >
-                            Cart Items
-                        </button>
-                        <button 
-                            className={`tab-btn ${activeTab === 'orders' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('orders')}
-                        >
-                            Order History
-                        </button>
-                    </div>
+                    <h3 style={{ margin: "8px 0 4px", fontWeight: 600, fontSize: "1.3rem" }}>
+                        {user?.username}
+                    </h3>
+                    <p style={{ color: "#888", fontSize: "0.98rem" }}>{user?.email}</p>
                 </div>
-
-                <div className="profile-content">
-                    {activeTab === 'profile' && (
-                        <div className="profile-details">
-                            <h2>Profile Information</h2>
-                            <div className="info-grid">
-                                <div className="info-item">
-                                    <label>Username</label>
-                                    <p>{user?.username}</p>
-                                </div>
-                                <div className="info-item">
-                                    <label>Email</label>
-                                    <p>{user?.email}</p>
-                                </div>
-                                <div className="info-item">
-                                    <label>Member Since</label>
-                                    <p>{new Date(user?.createdAt).toLocaleDateString()}</p>
-                                </div>
-                                <div className="info-item">
-                                    <label>Account Type</label>
-                                    <p>{user?.admin ? 'Administrator' : 'Customer'}</p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {activeTab === 'cart' && (
-                        <div className="cart-section">
-                            <h2>Shopping Cart</h2>
-                            {cartItems.length === 0 ? (
-                                <div className="empty-cart">
-                                    <p>Your cart is empty</p>
-                                </div>
-                            ) : (
-                                <div className="cart-items">
-                                    {cartItems.map(item => (
-                                        <div key={item._id} className="cart-item">
-                                            <img src={item.image} alt={item.name} />
-                                            <div className="item-details">
-                                                <h3>{item.name}</h3>
-                                                <p>${item.price}</p>
-                                            </div>
-                                            <div className="item-quantity">
-                                                <button>-</button>
-                                                <span>{item.quantity}</span>
-                                                <button>+</button>
-                                            </div>
-                                            <button className="remove-btn">Remove</button>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    )}
+                <div
+                    className="profile-tabs"
+                    style={{
+                        marginTop: "36px",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "12px",
+                    }}
+                >
+                    <button
+                        className={`tab-btn ${activeTab === "profile" ? "active" : ""}`}
+                        onClick={() => setActiveTab("profile")}
+                        style={{
+                            padding: "12px",
+                            borderRadius: "8px",
+                            border: "none",
+                            background: activeTab === "profile" ? "#4f8cff" : "#f0f4fa",
+                            color: activeTab === "profile" ? "#fff" : "#333",
+                            fontWeight: 500,
+                            cursor: "pointer",
+                            transition: "background 0.2s",
+                            fontSize: "1rem",
+                        }}
+                    >
+                        Profile Details
+                    </button>
+                    <button
+                        className={`tab-btn ${activeTab === "cart" ? "active" : ""}`}
+                        onClick={() => setActiveTab("cart")}
+                        style={{
+                            padding: "12px",
+                            borderRadius: "8px",
+                            border: "none",
+                            background: activeTab === "cart" ? "#4f8cff" : "#f0f4fa",
+                            color: activeTab === "cart" ? "#fff" : "#333",
+                            fontWeight: 500,
+                            cursor: "pointer",
+                            transition: "background 0.2s",
+                            fontSize: "1rem",
+                        }}
+                    >
+                        Cart Items
+                    </button>
+                    <button
+                        className={`tab-btn ${activeTab === "orders" ? "active" : ""}`}
+                        onClick={() => setActiveTab("orders")}
+                        style={{
+                            padding: "12px",
+                            borderRadius: "8px",
+                            border: "none",
+                            background: activeTab === "orders" ? "#4f8cff" : "#f0f4fa",
+                            color: activeTab === "orders" ? "#fff" : "#333",
+                            fontWeight: 500,
+                            cursor: "pointer",
+                            transition: "background 0.2s",
+                            fontSize: "1rem",
+                        }}
+                    >
+                        Order History
+                    </button>
                 </div>
             </div>
-        </>
-    );
+
+            <div
+                className="profile-content"
+                style={{
+                    flex: 1,
+                    background: "#fff",
+                    borderRadius: "18px",
+                    boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
+                    padding: "36px 40px",
+                    minHeight: "500px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                }}
+            >
+                {activeTab === "profile" && (
+                    <div className="profile-details">
+                        <h2 style={{ fontWeight: 600, marginBottom: "28px", fontSize: "1.5rem" }}>
+                            Profile Information
+                        </h2>
+                        <div
+                            className="info-grid"
+                            style={{
+                                display: "grid",
+                                gridTemplateColumns: "1fr 1fr",
+                                gap: "28px 40px",
+                            }}
+                        >
+                            <div className="info-item">
+                                <label style={{ color: "#888", fontSize: "0.98rem" }}>Username</label>
+                                <p style={{ fontWeight: 500, fontSize: "1.1rem" }}>{user?.username}</p>
+                            </div>
+                            <div className="info-item">
+                                <label style={{ color: "#888", fontSize: "0.98rem" }}>Email</label>
+                                <p style={{ fontWeight: 500, fontSize: "1.1rem" }}>{user?.email}</p>
+                            </div>
+                            <div className="info-item">
+                                <label style={{ color: "#888", fontSize: "0.98rem" }}>Member Since</label>
+                                <p style={{ fontWeight: 500, fontSize: "1.1rem" }}>
+                                    {new Date(user?.createdAt).toLocaleDateString()}
+                                </p>
+                            </div>
+                            <div className="info-item">
+                                <label style={{ color: "#888", fontSize: "0.98rem" }}>Account Type</label>
+                                <p style={{ fontWeight: 500, fontSize: "1.1rem" }}>
+                                    {user?.admin ? "Administrator" : "Customer"}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === "cart" && (
+                    <div className="cart-section">
+                        <h2 style={{ fontWeight: 600, marginBottom: "28px", fontSize: "1.5rem" }}>
+                            Shopping Cart
+                        </h2>
+                        {cartItems.length === 0 ? (
+                            <div
+                                className="empty-cart"
+                                style={{
+                                    textAlign: "center",
+                                    color: "#aaa",
+                                    fontSize: "1.1rem",
+                                    marginTop: "60px",
+                                }}
+                            >
+                                <p>Your cart is empty</p>
+                            </div>
+                        ) : (
+                            <div
+                                className="cart-items"
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "22px",
+                                }}
+                            >
+                                {cartItems.map((item) => (
+                                    <div
+                                        key={item._id}
+                                        className="cart-item"
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            background: "#f8fafd",
+                                            borderRadius: "12px",
+                                            padding: "18px 20px",
+                                            boxShadow: "0 1px 6px rgba(0,0,0,0.04)",
+                                            gap: "22px",
+                                        }}
+                                    >
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            style={{
+                                                width: "70px",
+                                                height: "70px",
+                                                borderRadius: "10px",
+                                                objectFit: "cover",
+                                                border: "1px solid #e0e0e0",
+                                            }}
+                                        />
+                                        <div className="item-details" style={{ flex: 1 }}>
+                                            <h3 style={{ margin: 0, fontWeight: 500, fontSize: "1.1rem" }}>
+                                                {item.name}
+                                            </h3>
+                                            <p style={{ color: "#4f8cff", fontWeight: 600, margin: "6px 0 0" }}>
+                                                ${item.price}
+                                            </p>
+                                        </div>
+                                        <div
+                                            className="item-quantity"
+                                            style={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "8px",
+                                                background: "#fff",
+                                                borderRadius: "6px",
+                                                border: "1px solid #e0e0e0",
+                                                padding: "4px 10px",
+                                            }}
+                                        >
+                                            <button
+                                                style={{
+                                                    border: "none",
+                                                    background: "#e0e7ff",
+                                                    color: "#4f8cff",
+                                                    borderRadius: "4px",
+                                                    width: "28px",
+                                                    height: "28px",
+                                                    fontSize: "1.1rem",
+                                                    cursor: "pointer",
+                                                }}
+                                            >
+                                                -
+                                            </button>
+                                            <span style={{ minWidth: "22px", textAlign: "center" }}>
+                                                {item.quantity}
+                                            </span>
+                                            <button
+                                                style={{
+                                                    border: "none",
+                                                    background: "#e0e7ff",
+                                                    color: "#4f8cff",
+                                                    borderRadius: "4px",
+                                                    width: "28px",
+                                                    height: "28px",
+                                                    fontSize: "1.1rem",
+                                                    cursor: "pointer",
+                                                }}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                        <button
+                                            className="remove-btn"
+                                            style={{
+                                                marginLeft: "18px",
+                                                background: "#ff4f4f",
+                                                color: "#fff",
+                                                border: "none",
+                                                borderRadius: "6px",
+                                                padding: "8px 16px",
+                                                fontWeight: 500,
+                                                cursor: "pointer",
+                                                transition: "background 0.2s",
+                                            }}
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+        </div>
+    </>
+);
 };
 
 export default Profile;

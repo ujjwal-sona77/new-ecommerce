@@ -10,6 +10,23 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Check token expiration
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const now = Math.floor(Date.now() / 1000);
+        if (payload.exp && payload.exp < now) {
+          alert("Session expired. Please login again.");
+          localStorage.removeItem("token");
+        }
+      } catch (e) {
+        // Invalid token format
+        alert("Session expired. Please login again.");
+        localStorage.removeItem("token");
+      }
+    }
+
     const fetchProducts = async () => {
       try {
         const fetchedProducts = await productService.getAllProducts();
