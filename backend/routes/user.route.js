@@ -39,7 +39,7 @@ router.post("/delete", async (req, res) => {
 
 router.get("/getUser/:email", async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.params.email });
+    const user = await User.findOne({ email: req.params.email }).populate("cart");
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
@@ -49,22 +49,6 @@ router.get("/getUser/:email", async (req, res) => {
   }
 });
 
-router.get("/me", auth, async (req, res) => {
-  try {
-    // req.user is set by auth middleware
-    res.json({
-      success: true,
-      user: {
-        id: req.user._id,
-        username: req.user.username,
-        email: req.user.email,
-        isAdmin: req.user.isAdmin,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
 
 // Example: POST /users
 export const userRouter = router;

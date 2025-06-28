@@ -26,6 +26,11 @@ const productSchema = new mongoose.Schema(
       type: String,  // Changed to String to store base64
       required: true
     },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
   },
   {
     timestamps: true,

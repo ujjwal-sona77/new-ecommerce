@@ -1,5 +1,6 @@
 import React from "react";
 import "./CSS/Products.css";
+import axios from "axios";
 
 const Products = ({ products, loading, error }) => {
   const formatPrice = (price) => {
@@ -73,7 +74,25 @@ const Products = ({ products, loading, error }) => {
                 </span>
               )}
             </div>
-            <button className="add-to-cart-btn">Add to Cart</button>
+            <button onClick={async ()=> {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                  alert("Please login to add items to your cart.");
+                  return;
+                }
+                const payload = JSON.parse(atob(token.split(".")[1]));
+                const email = payload.email;
+                try {
+                    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URI}/api/product/addtocart/${product._id}/${email}`);
+                    if (response.status === 200) {
+                        alert("Product added to cart successfully!");
+                    } else {
+                        alert("Failed to add product to cart.");
+                    }
+                } catch (err) {
+                    console.log(err.message)
+                } 
+            }} className="add-to-cart-btn">Add to Cart</button>
           </div>
         </div>
       ))}
