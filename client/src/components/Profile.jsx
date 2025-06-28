@@ -9,8 +9,13 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const [cartItems, setCartItems] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [popup, setPopup] = useState({ show: false, message: "" });
 
   useEffect(() => {
+    // Check for hash in URL to auto-switch to cart tab
+    if (window.location.hash === "#cart") {
+      setActiveTab("cart");
+    }
     const fetchUserData = async () => {
       try {
         const userData = await authService.getCurrentUser();
@@ -26,6 +31,11 @@ const Profile = () => {
     fetchUserData();
   }, []);
 
+  const showPopup = (message) => {
+    setPopup({ show: true, message });
+    setTimeout(() => setPopup({ show: false, message: "" }), 1800);
+  };
+
   if (loading) {
     return (
       <>
@@ -40,6 +50,28 @@ const Profile = () => {
   return (
     <>
       <Navbar />
+      {/* Popup notification */}
+      {popup.show && (
+        <div
+          style={{
+            position: "fixed",
+            top: 40,
+            right: 40,
+            zIndex: 9999,
+            background: "#4f8cff",
+            color: "#fff",
+            padding: "18px 36px",
+            borderRadius: "16px",
+            fontWeight: 600,
+            fontSize: "1.1rem",
+            boxShadow: "0 8px 32px rgba(79,140,255,0.18)",
+            animation: "popIn 0.5s cubic-bezier(.68,-0.55,.27,1.55)",
+          }}
+        >
+          <span role="img" aria-label="success" style={{marginRight: 10}}>✅</span>
+          {popup.message}
+        </div>
+      )}
       <div
         className="profile-container"
         style={{
@@ -368,25 +400,6 @@ const Profile = () => {
                           }}
                         >
                           <button
-                            onClick={async () => {
-                              try {
-                                const token = localStorage.getItem("token");
-                                const payload = JSON.parse(atob(token.split(".")[1]));
-                                const email = payload.email;
-                                if ((item.quantity || 1) > 1) {
-                                  await productService.decreaseProductQuantity(item._id, email);
-                                  setCartItems((prevItems) =>
-                                    prevItems.map((i) =>
-                                      i._id === item._id
-                                        ? { ...i, quantity: (i.quantity || 1) - 1 }
-                                        : i
-                                    )
-                                  );
-                                }
-                              } catch (error) {
-                                console.error("Error decreasing item quantity:", error);
-                              }
-                            }}
                             style={{
                               border: "none",
                               background: "#e0e7ff",
@@ -409,23 +422,6 @@ const Profile = () => {
                             {item.quantity || 1}
                           </span>
                           <button
-                            onClick={async () => {
-                              try {
-                                const token = localStorage.getItem("token");
-                                const payload = JSON.parse(atob(token.split(".")[1]));
-                                const email = payload.email;
-                                await productService.increseProductQuantity(item._id, email);
-                                setCartItems((prevItems) =>
-                                  prevItems.map((i) =>
-                                    i._id === item._id
-                                      ? { ...i, quantity: (i.quantity || 1) + 1 }
-                                      : i
-                                  )
-                                );
-                              } catch (error) {
-                                console.error("Error increasing item quantity:", error);
-                              }
-                            }}
                             style={{
                               border: "none",
                               background: "#e0e7ff",
@@ -448,6 +444,7 @@ const Profile = () => {
                               setCartItems((prevItems) =>
                                 prevItems.filter((i) => i._id !== item._id)
                               );
+                              showPopup("Product removed from cart!");
                             } catch (error) {
                               console.error("Error removing item from cart:", error);
                             }
@@ -557,4 +554,11 @@ const Profile = () => {
 };
 
 export default Profile;
+
+// Add popup animation to your CSS (Profile.css):
+// @keyframes popIn {
+//   0% { transform: scale(0.7) translateY(-30px); opacity: 0; }
+//   60% { transform: scale(1.1) translateY(10px); opacity: 1; }
+//   100% { transform: scale(1) translateY(0); opacity: 1; }
+// }
 

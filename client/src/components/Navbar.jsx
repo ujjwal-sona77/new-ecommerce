@@ -6,6 +6,7 @@ import { authService } from "../services/authService";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,6 +14,7 @@ const Navbar = () => {
       try {
         const userData = await authService.getCurrentUser();
         setUser(userData);
+        setCartCount(userData.cart ? userData.cart.length : 0);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -61,6 +63,31 @@ const Navbar = () => {
               className="nav-link"
             >
               Shop
+            </button>
+            <button
+              onClick={() => handleNavigation("/user/profile#cart")}
+              className="nav-link cart-link"
+              style={{ position: "relative" }}
+            >
+              Cart
+              {cartCount > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: -6,
+                    right: -16,
+                    background: "#ff4f4f",
+                    color: "#fff",
+                    borderRadius: "50%",
+                    padding: "2px 8px",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+                  }}
+                >
+                  {cartCount}
+                </span>
+              )}
             </button>
             {user ? (
               <>

@@ -62,5 +62,15 @@ export const productService = {
     } catch (error) {
       throw error.response?.data || error.message;
     }
-  }
+  },
+  decreaseProductQuantity: async (productId, email) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/product/decrease/${productId}/${email}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
+  },
 };

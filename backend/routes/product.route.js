@@ -57,25 +57,5 @@ router.post("/remove/:productid/:email", async (req, res) => {
     }
 });
 
-router.post("/increase/:productid/:email", async (req, res) => {
-    try {
-        const { productid, email } = req.params;
-        const user = await userModel.findOne({ email: email });
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        const product = await Product.findById(productid);
-        if (!product) {
-            return res.status(404).json({ message: "Product not found" });
-        }
-        product.quantity += 1;
-        await product.save();
-        res.status(200).json({ message: "Product quantity increased" });
-    } catch (error) {
-        res
-            .status(500)
-            .json({ message: "Error increasing product quantity", error: error.message });
-    }
-});
 
 export const productRouter = router;
