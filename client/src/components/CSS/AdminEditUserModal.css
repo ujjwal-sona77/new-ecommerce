@@ -1,0 +1,61 @@
+.admin-edit-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.admin-edit-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  min-width: 320px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  max-width: 95vw;
+}
+.admin-edit-modal h3 {
+  margin-bottom: 1rem;
+  color: #1976d2;
+}
+.admin-edit-modal label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  color: #444;
+  font-weight: 500;
+}
+.admin-edit-modal input[type="text"],
+.admin-edit-modal input[type="email"] {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+}
+.admin-edit-modal input[type="checkbox"] {
+  margin-left: 0.5rem;
+}
+.admin-edit-error {
+  color: #e74c3c;
+  margin-top: 0.5rem;
+}
+.admin-edit-save-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.admin-edit-cancel-btn {
+  background: #f4f6f8;
+  color: #1976d2;
+  border: 1px solid #1976d2;
+  border-radius: 6px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}

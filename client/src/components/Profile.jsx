@@ -561,4 +561,3 @@ export default Profile;
 //   60% { transform: scale(1.1) translateY(10px); opacity: 1; }
 //   100% { transform: scale(1) translateY(0); opacity: 1; }
 // }
-

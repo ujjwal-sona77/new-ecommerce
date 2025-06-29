@@ -4,6 +4,7 @@ import { loginUser } from "../controllers/login.user.js";
 import User from "../models/user.model.js";
 import { auth } from "../middleware/auth.js";
 import { editUser } from "../controllers/Edit.user.js";
+import { getAllUsers, editUserByAdmin } from '../controllers/admin.order.js';
 
 const router = express.Router();
 
@@ -25,6 +26,8 @@ router.get("/users", async (req, res) => {
 router.post("/edit/:email", auth, editUser);
 
 router.post("/delete", async (req, res) => {
+
+    
   const { email } = req.body;
   try {
     const deletedUser = await User.findOneAndDelete({ email: email });
@@ -49,6 +52,9 @@ router.get("/getUser/:email", async (req, res) => {
   }
 });
 
+// Admin routes
+router.get('/admin/users', getAllUsers);
+router.put('/admin/user/:id', editUserByAdmin);
 
 // Example: POST /users
 export const userRouter = router;
