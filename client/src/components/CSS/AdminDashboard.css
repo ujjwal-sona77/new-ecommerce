@@ -1,71 +1,266 @@
-.admin-dashboard {
-    padding: 2rem;
-    margin-top: 60px;
+.admin-dashboard-root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f4f6f8 0%, #e3e9f7 100%);
+  font-family: "Segoe UI", Arial, sans-serif;
 }
-
-.dashboard-header {
-    margin-bottom: 2rem;
+.admin-dashboard-container {
+  display: flex;
+  max-width: 1400px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  min-height: 70vh;
 }
-
-.tab-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+.admin-dashboard-sidebar {
+  background: #1976d2;
+  color: #fff;
+  min-width: 220px;
+  padding: 2rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
 }
-
-.tab-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    background: #f3f4f6;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.admin-dashboard-logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
 }
-
-.tab-btn.active {
-    background: #3b82f6;
-    color: white;
+.admin-dashboard-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }
-
-.users-grid,
+.sidebar-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.sidebar-btn.active,
+.sidebar-btn:hover {
+  background: #1565c0;
+}
+.admin-dashboard-main {
+  flex: 1;
+  padding: 2.5rem 2rem;
+  min-width: 0;
+}
+.admin-section {
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  padding: 2rem 1rem;
+  min-width: 0;
+}
+.admin-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+  border-left: 6px solid #1976d2;
+  padding-left: 1rem;
+}
+.admin-section-title.products {
+  border-color: #388e3c;
+  color: #388e3c;
+}
+.admin-section-title.orders {
+  border-color: #fbc02d;
+  color: #fbc02d;
+}
+.responsive-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+  background: transparent;
+}
+.admin-table th,
+.admin-table td {
+  padding: 0.85rem 0.7rem;
+  text-align: left;
+  background: #fff;
+}
+.admin-table th {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1rem;
+  border-bottom: 2px solid #e3e6ea;
+}
+.admin-table tr {
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.03);
+}
+.admin-table td {
+  color: #333;
+  font-size: 0.98rem;
+  border-bottom: 1px solid #f4f6f8;
+}
+.badge {
+  padding: 0.3em 0.8em;
+  border-radius: 12px;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.badge-admin {
+  background: #1976d2;
+  color: #fff;
+}
+.badge-user {
+  background: #e0e0e0;
+  color: #333;
+}
+.edit-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-size: 0.97em;
+  transition: background 0.2s;
+}
+.edit-btn:hover {
+  background: #1565c0;
+}
+.empty-msg {
+  color: #888;
+  margin-top: 1.5rem;
+  text-align: center;
+}
 .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
 }
-
-.user-card,
 .product-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(56, 142, 60, 0.07);
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem;
+  transition: box-shadow 0.2s;
 }
-
-.card-actions {
-    margin-top: 1rem;
-    display: flex;
+.product-card:hover {
+  box-shadow: 0 4px 16px rgba(56, 142, 60, 0.13);
+}
+.product-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.no-img {
+  color: #aaa;
+  font-size: 2rem;
+}
+.product-info {
+  flex: 1;
+}
+.product-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+.product-price {
+  color: #388e3c;
+  font-weight: 500;
+  margin-bottom: 0.15rem;
+}
+.product-discount {
+  color: #888;
+  font-size: 0.95rem;
+}
+.product-discount span {
+  color: #1976d2;
+}
+@media (max-width: 900px) {
+  .admin-dashboard-container {
+    flex-direction: column;
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+  }
+  .admin-dashboard-sidebar {
+    flex-direction: row;
+    min-width: 0;
+    width: 100%;
+    padding: 1rem 0.5rem;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .admin-dashboard-logo {
+    margin-bottom: 0;
+    font-size: 1.2rem;
+  }
+  .admin-dashboard-sidebar nav {
+    flex-direction: row;
     gap: 0.5rem;
+    width: auto;
+  }
+  .sidebar-btn {
+    font-size: 1rem;
+    padding: 0.5rem 0.8rem;
+  }
+  .admin-dashboard-main {
+    padding: 1.2rem 0.5rem;
+  }
 }
-
-.card-actions button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-}
-
-.delete-btn {
-    background: #ef4444;
-    color: white;
-}
-
-.add-product-btn {
+@media (max-width: 600px) {
+  .admin-section {
+    padding: 1rem 0.2rem;
+  }
+  .admin-section-title {
+    font-size: 1.2rem;
+    padding-left: 0.5rem;
     margin-bottom: 1rem;
-    padding: 0.75rem 1.5rem;
-    background: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .product-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.8rem;
+  }
+  .product-img {
+    width: 55px;
+    height: 55px;
+  }
+  .admin-table th,
+  .admin-table td {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.93rem;
+  }
 }

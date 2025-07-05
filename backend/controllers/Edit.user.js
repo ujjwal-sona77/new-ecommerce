@@ -12,7 +12,7 @@ export const editUser = [
           .send({ message: "User not found", success: false });
       }
       if (req.file) {
-        user.profilePic = req.file.buffer.toString("base64"); // Store as base64 string
+        user.profilePic = req.file.buffer.toString("base64");
       }
       if (req.body.username) {
         user.username = req.body.username;

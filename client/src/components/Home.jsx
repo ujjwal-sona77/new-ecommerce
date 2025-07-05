@@ -4,6 +4,8 @@ import Navbar from "./Navbar";
 import Products from "./Products";
 import { productService } from "../services/productService";
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -12,6 +14,7 @@ const Home = () => {
   const [popup, setPopup] = useState({ show: false, message: "" });
   const heroRef = useRef(null);
   const productsSectionRef = useRef(null);
+  const productsGridRef = useRef(null);
 
   const showPopup = (message) => {
     setPopup({ show: true, message });
@@ -79,6 +82,31 @@ const Home = () => {
         }
       );
     }
+    // Animate product cards on scroll with ScrollTrigger
+    if (productsGridRef.current) {
+      // Kill previous triggers to avoid duplicates
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      gsap.utils.toArray(productsGridRef.current.children).forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 60, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            delay: i * 0.05,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              toggleActions: "play none none none",
+              scroller: undefined // Let Lenis handle scroll, don't override
+            },
+          }
+        );
+      });
+    }
   }, [loading]);
 
   return (
@@ -127,7 +155,9 @@ const Home = () => {
         </section>
         <section className="products-section new-products" ref={productsSectionRef}>
           <h2 className="section-title new-section-title">Featured Products</h2>
-          <Products products={products} loading={loading} error={error} showPopup={showPopup} />
+          <div ref={productsGridRef} className="products-grid new-products-grid">
+            <Products products={products} loading={loading} error={error} showPopup={showPopup} customGridRef={productsGridRef} />
+          </div>
         </section>
       </div>
     </>
