@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { authService } from "../services/authService";
 import Navbar from "./Navbar";
 import { productService } from "../services/productService";
+import { useNavigate } from "react-router-dom";
 
 const pastelGradient = "linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%)";
 const glassBg = "rgba(255,255,255,0.85)";
@@ -15,6 +16,7 @@ const Profile = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [popup, setPopup] = useState({ show: false, message: "" });
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (window.location.hash === "#cart") setActiveTab("cart");
@@ -374,7 +376,7 @@ const Profile = () => {
                                                             boxShadow: "0 2px 8px rgba(79,140,255,0.08)",
                                                             transition: "background 0.2s",
                                                         }}
-                                                        onClick={() => alert("Order placed! (Implement order logic here)")}
+                                                        onClick={() => navigate("/checkout", { state: { cartItems, user } })}
                                                     >
                                                         Place Order
                                                     </button>

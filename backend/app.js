@@ -8,8 +8,8 @@ import { orderRouter } from "./routes/order.route.js";
 import { adminRouter } from "./routes/admin.route.js";
 app.use(
   cors({
-       origin: "http://localhost:5173", 
-    // origin: "https://new-ecommerce-drab.vercel.app",
+    //    origin: "http://localhost:5173", 
+    origin: "https://new-ecommerce-drab.vercel.app",
     credentials: true,
   })
 );

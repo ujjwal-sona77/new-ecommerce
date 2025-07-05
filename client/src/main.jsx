@@ -13,6 +13,7 @@ import AdminAuth from './components/AdminProtected.jsx'
 import Profile from './components/Profile.jsx'
 import AdminDashboard from './components/AdminDashboard.jsx'
 import EditUser from './components/EditUser.jsx'
+import Checkout from './components/Checkout.jsx'
 import { initSmoothScroll } from './utils/smoothScroll.js'
 
 function AppWithScroll() {
@@ -28,6 +29,7 @@ function AppWithScroll() {
           <Route path="/home" element={<Home />} />
           <Route path="/shop" element={<Home />} />
           <Route path="/user/profile" element={<Profile />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route element={<AdminAuth />}>
             <Route path="/create/product" element={<CreateProduct />} />
             <Route path='/admin/dashboard' element={<AdminDashboard />} />
